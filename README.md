@@ -16,5 +16,5 @@ The program is centred around the `bioClock` class, which is a discrete collecti
 Contributors
 ------------
 
-[Bryan Hatton](http://www.bryanjhatton.com)
+[Bryan Hatton](http://www.bryanjhatton.com)  
 [Edward Kim](http://www.edwardkim.name)
