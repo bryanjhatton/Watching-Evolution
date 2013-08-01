@@ -6,8 +6,8 @@
 #include "Clock.h"
 #include "Interface.h"
 #include <fstream>
-#include <direct.h>
-#include <shlwapi.h>
+//#include <direct.h>
+//#include <shlwapi.h>
 
 using namespace std;
 

@@ -248,11 +248,14 @@ void world::recordGeneration()
 //  The path of the exe file was found and returned as text
 string getPath()
 {
-    TCHAR path[2048] = {0};
+    /*
+    char path[2048] = {0};
     GetModuleFileName(NULL, path, 2048);
     const string exe_path(path);
 
     return exe_path;
+    */
+    return "/proc/self/exe";
 }
 
 void world::outputGenAverages()
