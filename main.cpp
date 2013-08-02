@@ -30,6 +30,13 @@ int main()
     varData settings;
     settings = runCLI();
 
+    // check for manual user quit
+    if (settings.mQuitFlag)
+    {
+        cout << endl << "User quit manually!" << endl;
+        return 0;
+    }
+
     //  run the simulations
     for (int i = 0; i < settings.mSimTimes; i++)
     {

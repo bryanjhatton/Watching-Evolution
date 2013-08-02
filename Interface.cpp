@@ -104,6 +104,7 @@ varData runCLI ()
     string selectivePressureDetails = " [1 - 10000000]";
     string help = "help";
     string run = "run";
+    string quit = "quit";
 
     //  found is used to store the starting location of found string
     size_t stringPosition;
@@ -125,7 +126,8 @@ varData runCLI ()
             writeSettingHelp (genomeSize, genomeSizeDetails, "Sets the size of the genome matrix.");
             writeSettingHelp (mutationRate, mutationRateDetails, "Sets the percent rate of mutation.");
             writeSettingHelp (selectivePressure, selectivePressureDetails, "Sets the magnitude of selective pressure.");
-            cout << endl << "run                       Executes simulation using current settings." << endl << endl;
+            cout << endl << "run                       Executes simulation using current settings." << endl;
+            cout << "quit                      Quit simulation." << endl << endl;
         }
 
 
@@ -153,7 +155,17 @@ varData runCLI ()
         // 	exit CLI when user specifies to run simulation
         stringPosition = settingEntry.find (run);
         if (stringPosition != string::npos)
+        {
+            userSettings.mQuitFlag = false;
             break;
+        }
+
+        stringPosition = settingEntry.find (quit);
+        if (stringPosition != string::npos)
+        {
+            userSettings.mQuitFlag = true;
+            break;
+        }
 
         cout << endl;
     }

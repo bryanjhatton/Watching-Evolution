@@ -33,6 +33,9 @@ struct varData
 
     //  controls magnitude of selective pressures
     int mSelectivePressureMagnitude;
+
+    // whether or not the user decided to quit
+    bool mQuitFlag;
 };
 
 //	more CLI funtions
