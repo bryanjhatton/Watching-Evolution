@@ -14,9 +14,9 @@ world::world(varData worldSettings)
 
     *PRESSURE_MAGNITUDE = worldSettings.mSelectivePressureMagnitude;
 
-    createOutputFile();
+    //createOutputFile();
 
-    outputSettings();
+    //outputSettings();
 }
 
 void world::createOutputFile()
