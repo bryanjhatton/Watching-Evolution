@@ -13,83 +13,6 @@ world::world(varData worldSettings)
     mWorldSettings = worldSettings;
 
     *PRESSURE_MAGNITUDE = worldSettings.mSelectivePressureMagnitude;
-
-    //createOutputFile();
-
-    //outputSettings();
-}
-
-void world::createOutputFile()
-{
-    //  variables for time, and file address
-    time_t rawtime;
-    struct tm * timeinfo;
-
-    //	The 35 is the max length of the fileName in chars
-    char  fileName [35];
-    char  GraphicFileName [35];
-    size_t pos;
-    string filePath;
-    string GraphicFilePath;
-
-    //	get the current time
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-
-    //  save the prefix "Sim - ", with time and date info to fileName, ended with ".txt"
-    //  The 35 is the max length of the fileName in chars
-    strftime (fileName, 35, "Sim - %d %b %Y %Hh%Mm%Ss.txt", timeinfo);
-    strftime (GraphicFileName, 35, "Pic - %d %b %Y %Hh%Mm%Ss.txt", timeinfo);
-
-    //	save the path of the executable file to the string: directory
-    string directory (getPath());
-    /*
-    //  find "Clock Evolution" in the path of the exe
-    pos = directory.find("Clock Evolution\\");
-
-    //  if the folder is found, move the position to the end of the directory name
-    if (pos != string::npos)
-    {
-        //  move the position to the end of "Clock Evolution\" in the string
-        //	The 16 is the length of "Clock Evolution\" in characters
-        pos += 16;
-    }
-    else
-    {*/
-        //	if the executable isn't under the "Clock Evolution" directory, the simulation folder and files will be in the same directory as the exe
-        pos = directory.size() - 19;//directory.find_last_of("/\\");
-    //}
-
-    //	resize directory string to end at the Clock Evolution folder, or the folder in which the exe's stored
-    directory.resize(pos);
-
-    //	add "Simulations" as a subdirectory to which the simulation details will be stored
-    //directory += "Simulations\\";
-
-    //  add the directory  filename to the end of the path, completing the save location
-    filePath = directory + fileName;
-    GraphicFilePath = directory + GraphicFileName;
-
-    //	this code makes the "Simulations" directory if it is not already there, if it already exists, nothing happens
-    //mkdir(directory.c_str());
-
-    //	once the folder has been created, the file is opened
-    fout.open (filePath.c_str(), fstream::out);
-    gout.open (GraphicFilePath.c_str(), fstream::out);
-
-    //	if file once again doesn't open, something has gone wrong, so alert user of the situation and provide option to quit or continue
-    if (!fout.is_open() || !gout.is_open())
-    {
-        cout << endl << "A simulation record could not be created." << endl;
-        cout << endl << "To quit, press the 'x' in the top right corner of this window to exit." << endl;
-        system("pause");
-    }
-    //	if the file was successfully opened
-    else
-    {
-        //	save the file location so that it can be output to the user at the end of a simulation
-        mFileSaveLoc = filePath;
-    }
 }
 
 //  create the vector of clocks
@@ -176,15 +99,10 @@ void world::mateClocks()
         cout << endl << "This is generation " << x + 1 << endl;
         outputGenAverages();
     }
-
-    //	print the location of the saved file to the screen
-    cout << "The file containing the details and settings of this simulation is located in: " << mFileSaveLoc << endl;
 }
 
 void world::recordGeneration()
 {
-    //  clear the screen
-    system("cls");
 
     //  choose a random clock from within the population
     MTRand randGen;
@@ -244,20 +162,6 @@ void world::recordGeneration()
     gout << endl;
 }
 
-//  This function was taken from http://www.hardforum.com/showthread.php?t=973922 from Shadow2531
-//  The path of the exe file was found and returned as text
-string getPath()
-{
-    /*
-    char path[2048] = {0};
-    GetModuleFileName(NULL, path, 2048);
-    const string exe_path(path);
-
-    return exe_path;
-    */
-    return "/proc/self/exe";
-}
-
 void world::outputGenAverages()
 {
 
@@ -311,30 +215,10 @@ void world::outputGenAverages()
     hrGearHand /= mWorldSettings.mPopulationSize - numDeadClocks;
     avgNotNullPieces /= mWorldSettings.mPopulationSize - numDeadClocks;
 
-    /*
-    //  output all of the survival scores
-    for (int i = 0; i < mWorldSettings.mPopulationSize; i++)
-	{
-	    if (mPopulation[i].calcSurvivalScore() != 0)
-	    {
-            fout << (double)mPopulation[i].getSurvivalScore();
-
-            if (i != mWorldSettings.mPopulationSize - 1)
-                fout << ",";
-	    }
-	}
-    */
 
     fout << bestPend << "," << secGearInterval << "," << minGearInterval << "," << hrGearInterval << "," << secGearHand << "," << minGearHand << ","
 	<< hrGearHand << "," << avgNotNullPieces << "," << avgSurvivalScore << "," << numDeadClocks << "," << numPendClocks << "," << numGearClocks << ","
 	<< num1HClocks << "," << num2HClocks << "," << num3HClocks;
 
 	fout << endl;
-}
-
-void world::outputSettings()
-{
-    fout << "Genome Size: " << mWorldSettings.mGenomeSize << "," << "Mutation Rate: " << mWorldSettings.mMutationRate << "," << "Number of Generations: " << mWorldSettings.mNumGenerations << "," << "Population Size: " << mWorldSettings.mPopulationSize << "," << "SPM: " << mWorldSettings.mSelectivePressureMagnitude << endl;
-    //fout << "Genome Size" << "," << "Mutation Rate" << "," << "Number of Generations" << "," << "Population Size" << "," << "SPM" << endl;
-    //fout << mWorldSettings.mGenomeSize << "," << mWorldSettings.mMutationRate << "," << mWorldSettings.mNumGenerations << "," << mWorldSettings.mPopulationSize << "," << mWorldSettings.mSelectivePressureMagnitude << endl;
 }
