@@ -17,4 +17,4 @@ Contributors
 ------------
 
 [Bryan Hatton](http://www.bryanjhatton.com)  
-[Edward Kim](http://www.edwardkim.name)
+[Edward Kim](http://eddotman.github.io)
